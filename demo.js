@@ -31,7 +31,7 @@ _template.innerHTML = `<button></button>`;
 
 function Demo() {
   const [count, setCount] = createSignal(0);
-  const increment = () => setCount(count() + 1);
+  const increment = () => setCount(prev => prev + 1);
   return (() => {
     const _element = _template.content.cloneNode(true);
     $addEventListener(_element, 'click', increment);

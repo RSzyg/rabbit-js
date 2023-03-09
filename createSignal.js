@@ -10,6 +10,9 @@ export function createSignal(value) {
   };
 
   const write = (nextValue) => {
+    if (typeof nextValue === 'function') {
+      nextValue = nextValue(value);
+    }
     value = nextValue;
     for (const subscriber of subscribers) {
       subscriber();
