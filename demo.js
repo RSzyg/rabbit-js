@@ -1,6 +1,22 @@
 import { createEffect } from 'createEffect';
 import { createSignal } from 'createSignal';
 
+function $render(dom, container) {
+  if (!container) {
+    return;
+  }
+  container.textContent = '';
+  container.append(dom);
+}
+
+function $createComponent(component, props) {
+  const dom = component(props);
+
+  // TODO: handle lifecycle
+
+  return dom;
+}
+
 function $insert(node, read) {
   if (!node) {
     return;
@@ -74,6 +90,4 @@ function Demo() {
 }
 $delegateEvent(['click']);
 
-const container = document.getElementById('app');
-container.innerHTML = '';
-container.append(Demo());
+$render($createComponent(Demo, {}), document.getElementById('app'));
