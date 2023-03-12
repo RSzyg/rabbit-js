@@ -1,8 +1,15 @@
 import { createEffect } from 'createEffect';
 import { createSignal } from 'createSignal';
 
-function $render(dom, container) {
+let $root = null;
+
+function $render(componentCreator, container) {
   if (!container) {
+    return;
+  }
+  $root = container;
+  const dom = componentCreator();
+  if (!dom) {
     return;
   }
   container.textContent = '';
@@ -28,7 +35,10 @@ function $insert(node, read) {
 
 const $EVENTS = '$r_events';
 
-function $delegateEvent(eventNames, mountNode = window.document) {
+function $delegateEvent(eventNames, mountNode) {
+  if (!mountNode) {
+    mountNode = $root || window.document;
+  }
   const eventSet = mountNode[$EVENTS] || (mountNode[$EVENTS] = new Set());
   for (let i = 0; i < eventNames.length; i++) {
     const name = eventNames[i];
@@ -89,7 +99,6 @@ function Button(props) {
     return _element;
   })();
 }
-$delegateEvent(['click']);
 
 function Demo() {
   const [count, setCount] = createSignal(0);
@@ -103,4 +112,5 @@ function Demo() {
   });
 }
 
-$render($createComponent(Demo, {}), document.getElementById('app'));
+$render(() => $createComponent(Demo, {}), document.getElementById('app'));
+$delegateEvent(['click']);
