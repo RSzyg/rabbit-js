@@ -78,16 +78,29 @@ function $template(html) {
 
 const _template = $template(`<button></button>`);
 
-function Demo() {
-  const [count, setCount] = createSignal(0);
-  const increment = () => setCount((prev) => prev + 1);
+function Button(props) {
+  // JSX
+  // return <button onClick={props.onClick}>{props.value}</button>;
+  // =>
   return (() => {
     const _element = _template.cloneNode(true);
-    _element.$r_click = increment;
-    $insert(_element, count);
+    _element.$r_click = props.onClick;
+    $insert(_element, props.value);
     return _element;
   })();
 }
 $delegateEvent(['click']);
+
+function Demo() {
+  const [count, setCount] = createSignal(0);
+  const increment = () => setCount((prev) => prev + 1);
+  // JSX
+  // return <Button value={count} onClick={increment} />
+  // =>
+  return $createComponent(Button, {
+    value: count,
+    onClick: increment,
+  });
+}
 
 $render($createComponent(Demo, {}), document.getElementById('app'));
