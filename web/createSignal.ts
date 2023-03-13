@@ -1,7 +1,7 @@
-import { $getCurrentSubscriber } from 'context';
+import { $getCurrentSubscriber } from './context.js';
 
-export function createSignal(value) {
-  const subscribers = new Set();
+export function createSignal<T>(value: T) {
+  const subscribers = new Set<() => void>();
 
   const read = () => {
     const subscriber = $getCurrentSubscriber();
@@ -9,7 +9,7 @@ export function createSignal(value) {
     return value;
   };
 
-  const write = (nextValue) => {
+  const write = (nextValue: T) => {
     if (typeof nextValue === 'function') {
       nextValue = nextValue(value);
     }

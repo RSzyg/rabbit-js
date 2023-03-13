@@ -1,5 +1,4 @@
-import { createEffect } from 'createEffect';
-import { createSignal } from 'createSignal';
+import { createSignal, createEffect } from 'rabbit-js/web';
 
 let $root = null;
 

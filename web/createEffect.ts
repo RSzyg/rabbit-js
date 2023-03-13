@@ -1,6 +1,6 @@
-import { $context } from 'context';
+import { $context } from './context.js';
 
-export function createEffect(fn) {
+export function createEffect(fn: () => void) {
   const execute = () => {
     $context.push(execute);
     try {
