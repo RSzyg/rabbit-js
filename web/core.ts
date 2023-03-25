@@ -64,7 +64,7 @@ export function delegateEvent(
   if (!$nodeToEventList.has(mountNode)) {
     $nodeToEventList.set(mountNode, new Set());
   }
-  // eventSet should be exist, asserts here
+  // eventSet should be existing, asserts here
   const eventSet = $nodeToEventList.get(mountNode)!;
   for (let i = 0; i < eventNames.length; i++) {
     const name = eventNames[i];
