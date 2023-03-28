@@ -1,6 +1,6 @@
 import ts from "typescript";
-import fs from "fs";
-import path from "path";
+// import fs from "fs";
+// import path from "path";
 
 /**
  *
@@ -44,18 +44,19 @@ function compile(fileNames, options) {
 
 /** @type {string[]} */
 const fileNames = process.argv.slice(2);
-for (let i = 0; i < fileNames.length; i++) {
-  if (fs.statSync(fileNames[i], { throwIfNoEntry: false })?.isDirectory()) {
-    fileNames[i] = path.resolve(fileNames[i], "index.ts");
-  }
-  // fileName is not a directory
-  // fileName is not exist
-  else if (!/.*\.tsx?$/.test(fileNames[i])) {
-    fileNames[i] += ".ts";
-  }
-}
+// for (let i = 0; i < fileNames.length; i++) {
+//   if (fs.statSync(fileNames[i], { throwIfNoEntry: false })?.isDirectory()) {
+//     fileNames[i] = path.resolve(fileNames[i], "index.ts");
+//   }
+//   // fileName is not a directory
+//   // fileName is not exist
+//   else if (!/.*\.tsx?$/.test(fileNames[i])) {
+//     fileNames[i] += ".ts";
+//   }
+// }
 
 compile(fileNames, {
+  strict: true,
   noEmitOnError: true,
   noImplicitAny: true,
   /** @type {ts.ScriptTarget.ES2015} */
